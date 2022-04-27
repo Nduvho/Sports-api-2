@@ -151,7 +151,8 @@ public class sportsData {
 
                 // JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("data");
 
-                System.out.println("The league name is: " + jsonobj_1.get("name"));
+                System.out.println("The league name is (" + jsonobj_1.get("name") + ") with a league code of (" + jsonobj_1.get("league_id") +
+                        ") and the country id of (" + jsonobj_1.get("country_id") +")");
 
             }
 
