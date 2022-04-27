@@ -58,7 +58,7 @@ public class sportsData {
             String league, country, team;
 
 
-            System.out.println("To view the list of 1.(leagues) \t 2.(countries) \t  3.(teams) ");
+            System.out.println("To view the list of different data press 1.(leagues) \t 2.(countries) \t  3.(teams) ");
             data =sc.nextInt();
 
 
@@ -204,15 +204,20 @@ public class sportsData {
 
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
 
+            Scanner tc = new Scanner(System.in);
+            String info = "";
+
             // System.out.println(jsonarr_1);
             System.out.println("These are all the countries you can view data from");
             System.out.println("\n");
+
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
 
                 // JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("data");
 
-                System.out.println("The country name is (" + jsonobj_1.get("name") +") of the continent of (" + jsonobj_1.get("continent")+")");
+                System.out.println("The country name is (" + jsonobj_1.get("name") +") of the continent of (" + jsonobj_1.get("continent")+")" +
+                        " which has a country code of (" + jsonobj_1.get("country_id") + ") and a country id of (" + jsonobj_1.get("country_code") + ")");
 
             }
 
@@ -268,8 +273,13 @@ public class sportsData {
 
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
 
+            Scanner tc = new Scanner(System.in);
+            String info = "";
+            System.out.println("To view the teams on the default country press 1 or specify the league you would like to see ");
+            info = tc.nextLine();
+
             // System.out.println(jsonarr_1);
-            System.out.println("These are all the teams you can view data from");
+            System.out.println("These are all the teams from " + info);
             System.out.println("\n");
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
