@@ -58,7 +58,7 @@ public class sportsData {
             String league, country, team;
 
 
-            System.out.println("To view the list of different data press (for leagues) \t 2(for countries) \t  3(for teams) ");
+            System.out.println("To view the list of different data press 1(for leagues) \t 2(for countries) \t  3(for teams) ");
             data =sc.nextInt();
 
 
