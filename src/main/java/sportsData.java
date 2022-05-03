@@ -34,7 +34,7 @@ public class sportsData {
             System.out.println("10.(for Markets)");
             System.out.println("11.(for Venues)");
             System.out.println("12.(for Referees)");
-            System.out.println("13.(for Rounds)");
+            System.out.println("13.(for Rounds)\n");
 
             data =sc.nextInt();
 
@@ -93,7 +93,7 @@ public class sportsData {
 
         try{
             String url = "https://app.sportdataapi.com/api/v1/soccer/leagues?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             URL urlForGetRequest1 = new URL(url);
 
 
@@ -109,12 +109,12 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest1.openStream());
                 while(sc.hasNext())
                 {
-                    readLine +=  sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
 
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the leagues you can view data from");
             System.out.println("\n");
@@ -138,7 +138,7 @@ public class sportsData {
             String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
             URL urlForGetRequest = new URL(url);
 
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
@@ -151,11 +151,11 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest.openStream());
                 while(sc.hasNext())
                 {
-                    readLine +=  sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the countries you can view data from");
             System.out.println("\n");
@@ -314,7 +314,7 @@ public class sportsData {
             String url = "https://app.sportdataapi.com/api/v1/soccer/teams?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=" + country_id + "\"";
             URL urlForGetRequest = new URL(url);
 
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
@@ -325,11 +325,11 @@ public class sportsData {
             else {
                 Scanner sc = new Scanner(urlForGetRequest.openStream());
                 while (sc.hasNext()) {
-                    readLine += sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the teams from " + info);
             System.out.println("\n");
@@ -349,7 +349,7 @@ public class sportsData {
 
            URL urlForGetRequest1 = new URL(url);
 
-           String readLine = "";
+           StringBuilder readLine = new StringBuilder();
            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
            conection.setRequestMethod("GET");
            conection.connect();
@@ -362,11 +362,11 @@ public class sportsData {
                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                while(sc.hasNext())
                {
-                   readLine +=  sc.nextLine();
+                   readLine.append(sc.nextLine());
                }
                sc.close();
            }
-           JSONObject jobj = new JSONObject(readLine);
+           JSONObject jobj = new JSONObject(readLine.toString());
            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
            System.out.println("These are all the leagues you can view data from");
            System.out.println("\n");
@@ -391,7 +391,7 @@ public class sportsData {
 
             URL urlForGetRequest1 = new URL(url);
 
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
@@ -404,11 +404,11 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest1.openStream());
                 while(sc.hasNext())
                 {
-                    readLine +=  sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the leagues you can view data from");
             System.out.println("\n");
@@ -431,7 +431,7 @@ public class sportsData {
 
             URL urlForGetRequest1 = new URL(url);
 
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
@@ -444,11 +444,11 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest1.openStream());
                 while(sc.hasNext())
                 {
-                    readLine +=  sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the the players you can view data from");
             System.out.println("\n");
@@ -476,7 +476,7 @@ public class sportsData {
 
             URL urlForGetRequest1 = new URL(url);
 
-            String readLine = "";
+            StringBuilder readLine = new StringBuilder();
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
@@ -489,11 +489,11 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest1.openStream());
                 while(sc.hasNext())
                 {
-                    readLine +=  sc.nextLine();
+                    readLine.append(sc.nextLine());
                 }
                 sc.close();
             }
-            JSONObject jobj = new JSONObject(readLine);
+            JSONObject jobj = new JSONObject(readLine.toString());
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
             System.out.println("These are all the the bookmakers you can view data from");
             System.out.println("\n");
@@ -517,7 +517,7 @@ public class sportsData {
 
            URL urlForGetRequest1 = new URL(url);
 
-           String readLine = "";
+           StringBuilder readLine = new StringBuilder();
            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
            conection.setRequestMethod("GET");
            conection.connect();
@@ -530,11 +530,11 @@ public class sportsData {
                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                while(sc.hasNext())
                {
-                   readLine +=  sc.nextLine();
+                   readLine.append(sc.nextLine());
                }
                sc.close();
            }
-           JSONObject jobj = new JSONObject(readLine);
+           JSONObject jobj = new JSONObject(readLine.toString());
            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
            System.out.println("These are all the the Markets you can view data from");
            System.out.println("\n");
@@ -558,7 +558,7 @@ public class sportsData {
 
            URL urlForGetRequest1 = new URL(url);
 
-           String readLine = "";
+           StringBuilder readLine = new StringBuilder();
            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
            conection.setRequestMethod("GET");
            conection.connect();
@@ -571,11 +571,11 @@ public class sportsData {
                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                while(sc.hasNext())
                {
-                   readLine +=  sc.nextLine();
+                   readLine.append(sc.nextLine());
                }
                sc.close();
            }
-           JSONObject jobj = new JSONObject(readLine);
+           JSONObject jobj = new JSONObject(readLine.toString());
            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
            System.out.println("These are all the the Markets you can view data from");
            System.out.println("\n");
@@ -604,7 +604,7 @@ public class sportsData {
 
            URL urlForGetRequest1 = new URL(url);
 
-           String readLine = "";
+           StringBuilder readLine = new StringBuilder();
            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
            conection.setRequestMethod("GET");
            conection.connect();
@@ -617,11 +617,11 @@ public class sportsData {
                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                while(sc.hasNext())
                {
-                   readLine +=  sc.nextLine();
+                   readLine.append(sc.nextLine());
                }
                sc.close();
            }
-           JSONObject jobj = new JSONObject(readLine);
+           JSONObject jobj = new JSONObject(readLine.toString());
            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
            System.out.println("These are all the referees you can view data from");
            System.out.println("\n");
@@ -645,7 +645,7 @@ public class sportsData {
 
            URL urlForGetRequest1 = new URL(url);
 
-           String readLine = "";
+           StringBuilder readLine = new StringBuilder();
            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
            conection.setRequestMethod("GET");
            conection.connect();
@@ -658,11 +658,11 @@ public class sportsData {
                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                while(sc.hasNext())
                {
-                   readLine +=  sc.nextLine();
+                   readLine.append(sc.nextLine());
                }
                sc.close();
            }
-           JSONObject jobj = new JSONObject(readLine);
+           JSONObject jobj = new JSONObject(readLine.toString());
            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
            System.out.println("These are all the referees you can view data from");
            System.out.println("\n");
