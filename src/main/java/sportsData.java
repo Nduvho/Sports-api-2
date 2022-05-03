@@ -1,41 +1,14 @@
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.*;
-
-import org.json.simple.parser.JSONParser;
-
-
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class sportsData {
 
-
-    @SuppressWarnings("unchecked")
-    public static void main(String[] args) throws IOException, ParseException {
-        //System.out.print("hello");
+    public static void main(String[] args) throws IOException {
         Boolean stillRunning = true;
 
         System.out.println("Welcome to the Sports data app");
@@ -43,46 +16,66 @@ public class sportsData {
         System.out.println("This app allows you to view the leagues, countries and teams");
         System.out.println("\n");
 
-
-
         do{
 
-
-
-
             Scanner sc =new Scanner(System.in);
-
             int data;
 
-            String data_id;
-            String league, country, team;
+            System.out.println("To view the list of different data press");
+            System.out.println("1.(for leagues)");
+            System.out.println("2.(for countries)");
+            System.out.println("3.(for teams)");
+            System.out.println("4.(for Seasons)");
+            System.out.println("5.(for Stages)");
+            System.out.println("6.(for Matches)");
+            System.out.println("7.(for Players)");
+            System.out.println("8.(for Top Scorers)");
+            System.out.println("9.(for Bookmakers)");
+            System.out.println("10.(for Markets)");
+            System.out.println("11.(for Venues)");
+            System.out.println("12.(for Referees)");
+            System.out.println("13.(for Rounds)");
 
-
-            System.out.println("To view the list of different data press 1(for leagues) \t 2(for countries) \t  3(for teams) ");
             data =sc.nextInt();
 
-
-            if( data<1|| data>3){
-                System.out.println("Please specify a number 1-3 to choose what data you want to display ");
+            if( data<1|| data>13){
+                System.out.println("Please specify a number 1-13 to choose what data you want to display ");
                 System.out.println("To view data type in 1.(leagues) \t 2.(countries) \t  3.(teams) ");
                 data = sc.nextInt();
             }
 
-
             if (data==1)  {
-
-
                 leagueRequest();
-
             }
-
             else if(data==2) {
-
                 countryRequest();
             }
             else if(data==3) {
-
                 teamsRequest();
+            }
+            else if(data==4){
+                seasonRequest();
+            }
+            else if (data==5){
+                stageRequest();
+            }
+            else if(data==7){
+                playerRequest();
+            }
+            else if(data==9){
+                bookMakersRequest();
+            }
+            else if(data==10){
+                marketRequest();
+            }
+            else if(data==11){
+                venueRequest();
+            }
+            else if(data==12){
+                refereeRequest();
+            }
+            else if(data==13){
+                roundRequest();
             }
             System.out.println("\n\n");
             System.out.println("Would you like to check more data on the sports app");
@@ -90,35 +83,21 @@ public class sportsData {
             if(sc.nextInt() != 1){
                 stillRunning = false;
             }
-
-
         }while(stillRunning);
-
         System.out.println("Thank you. You've successfully completed the program");
         System.out.println("\n");
         System.out.println("You may close the session");
-
     }
 
-
-
-
-
     private static void leagueRequest() throws IOException {
-        String pattern ="##.##";
-        DecimalFormat f = new DecimalFormat(pattern);
 
         try{
-            String apikey = "1f8177a0-ba72-11ec-b83e-09e34675ae35";
-
             String url = "https://app.sportdataapi.com/api/v1/soccer/leagues?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
-
-
-
-            URL urlForGetRequest = new URL(url);
-
             String readLine = "";
-            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+            URL urlForGetRequest1 = new URL(url);
+
+
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
             conection.setRequestMethod("GET");
             conection.connect();
             int responseCode = conection.getResponseCode();
@@ -127,56 +106,36 @@ public class sportsData {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             else
             {
-                Scanner sc = new Scanner(urlForGetRequest.openStream());
+                Scanner sc = new Scanner(urlForGetRequest1.openStream());
                 while(sc.hasNext())
                 {
                     readLine +=  sc.nextLine();
-
                 }
-
-                //  System.out.println("\nJSON data in string format");
-                //  System.out.println(readLine);
                 sc.close();
-
             }
-            JSONObject jobj = new JSONObject(readLine.toString());
 
+            JSONObject jobj = new JSONObject(readLine);
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
-
-            // System.out.println(jsonarr_1);
             System.out.println("These are all the leagues you can view data from");
             System.out.println("\n");
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
 
-                // JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("data");
-
-                System.out.println("The league name is (" + jsonobj_1.get("name") + ") with a league code of (" + jsonobj_1.get("league_id") +
-                        ") and the country id of (" + jsonobj_1.get("country_id") +")");
-
+                System.out.println("The league name is: " + jsonobj_1.get("name"));
+                System.out.println("League code of: " + jsonobj_1.get("league_id"));
+                System.out.println("The country id is: " + jsonobj_1.get("country_id"));
+                System.out.println("\n");
             }
-
-
 
         }  catch (IOException e)  {
             e.printStackTrace();
         }
     }
 
-
-
     private static void countryRequest() throws IOException{
 
-        String pattern ="##.##";
-        DecimalFormat f = new DecimalFormat(pattern);
-
         try{
-            String apikey = "1f8177a0-ba72-11ec-b83e-09e34675ae35";
-
             String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
-
-
-
             URL urlForGetRequest = new URL(url);
 
             String readLine = "";
@@ -193,51 +152,32 @@ public class sportsData {
                 while(sc.hasNext())
                 {
                     readLine +=  sc.nextLine();
-
                 }
-
-                //  System.out.println("\nJSON data in string format");
-                //  System.out.println(readLine);
                 sc.close();
-
             }
-            JSONObject jobj = new JSONObject(readLine.toString());
-
+            JSONObject jobj = new JSONObject(readLine);
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
-
-            Scanner tc = new Scanner(System.in);
-            String info = "";
-
-            // System.out.println(jsonarr_1);
             System.out.println("These are all the countries you can view data from");
             System.out.println("\n");
 
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
 
-                // JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("data");
-
-                System.out.println("The country name is (" + jsonobj_1.get("name") +") of the continent of (" + jsonobj_1.get("continent")+")"); //+" which has a country code of (" + jsonobj_1.get("country_id") + ") and a country id of (" + jsonobj_1.get("country_code") + ")");
-
+                System.out.println("The country name is: " + jsonobj_1.get("name"));
+                System.out.println("The continent of: " + jsonobj_1.get("continent"));
+                System.out.println("Country code of: " + jsonobj_1.get("country_id"));
+                System.out.println("Country id of : " + jsonobj_1.get("country_code"));
+                System.out.println("\n");
             }
-
-
-
         } catch (IOException e){
-
             e.printStackTrace();
-
         }
-
-
     }
-
 
     private static void teamsRequest() throws IOException{
 
-        HashMap<String, Integer> id = new HashMap<String, Integer>();
-        String info = "";
-        // add codes
+        HashMap<String, Integer> id = new HashMap<>();
+        String info;
         id.put("1",112);
         id.put("Albania",9);
         id.put("Algeria",10);
@@ -245,7 +185,7 @@ public class sportsData {
         id.put("Angola",12);
         id.put("Argentina",13);
         id.put("Armenia",14);
-        id.put("Argentina",15);
+        id.put("Australia",15);
         id.put("Austria",16);
         id.put("Azerbaijan",17);
         id.put("Bahrain",18);
@@ -364,26 +304,14 @@ public class sportsData {
         id.put("Zimbabwe",131);
         id.put("Ethiopia",132);
 
-        String pattern ="##.##";
-        DecimalFormat f = new DecimalFormat(pattern);
-
         Scanner tc = new Scanner(System.in);
 
         System.out.println("To view the teams on the default country press 1 or specify the league you would like to see ");
         info = tc.nextLine();
-
         int country_id= id.get(info);
 
-      //  int id1 = Integer.parseInt(id.get(info));
-
         try {
-
-
-            String apikey = "1f8177a0-ba72-11ec-b83e-09e34675ae35";
-
             String url = "https://app.sportdataapi.com/api/v1/soccer/teams?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=" + country_id + "\"";
-
-
             URL urlForGetRequest = new URL(url);
 
             String readLine = "";
@@ -398,40 +326,363 @@ public class sportsData {
                 Scanner sc = new Scanner(urlForGetRequest.openStream());
                 while (sc.hasNext()) {
                     readLine += sc.nextLine();
-
                 }
-
-                //  System.out.println("\nJSON data in string format");
-                //  System.out.println(readLine);
                 sc.close();
-
             }
-            JSONObject jobj = new JSONObject(readLine.toString());
-
+            JSONObject jobj = new JSONObject(readLine);
             JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
-
-
-            // System.out.println(jsonarr_1);
             System.out.println("These are all the teams from " + info);
             System.out.println("\n");
             for (int i = 0; i < jsonarr_1.length(); i++) {
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-
-                // JSONArray jsonarr_2 = (JSONArray) jsonobj_1.get("data");
-
                 System.out.println("The team name is " + jsonobj_1.get("name"));
-
+                System.out.println("\n");
             }
-
-
         } catch (IOException e){
-
             e.printStackTrace();
-
         }
     }
 
+    public static void seasonRequest(){
+       try{
+           String url = "https://app.sportdataapi.com/api/v1/soccer/seasons?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&league_id=314";
 
+           URL urlForGetRequest1 = new URL(url);
+
+           String readLine = "";
+           HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+           conection.setRequestMethod("GET");
+           conection.connect();
+           int responseCode = conection.getResponseCode();
+
+           if(responseCode !=200)
+               throw new RuntimeException("HttpResponseCode: " + responseCode);
+           else
+           {
+               Scanner sc = new Scanner(urlForGetRequest1.openStream());
+               while(sc.hasNext())
+               {
+                   readLine +=  sc.nextLine();
+               }
+               sc.close();
+           }
+           JSONObject jobj = new JSONObject(readLine);
+           JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+           System.out.println("These are all the leagues you can view data from");
+           System.out.println("\n");
+           for(int i =0; i<jsonarr_1.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+               System.out.println("The season name is: " + jsonobj_1.get("name"));
+               System.out.println("League code of: " + jsonobj_1.get("league_id"));
+               System.out.println("The state date: " + jsonobj_1.get("start_date"));
+               System.out.println("The end date: " + jsonobj_1.get("end_date"));
+               System.out.println("\n");
+           }
+
+       }  catch (IOException e)  {
+           e.printStackTrace();
+       }
+    }
+
+    private static void stageRequest(){
+        try{
+            String url = "https://app.sportdataapi.com/api/v1/soccer/stages?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&season_id=3";
+
+            URL urlForGetRequest1 = new URL(url);
+
+            String readLine = "";
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+            conection.setRequestMethod("GET");
+            conection.connect();
+            int responseCode = conection.getResponseCode();
+
+            if(responseCode !=200)
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            else
+            {
+                Scanner sc = new Scanner(urlForGetRequest1.openStream());
+                while(sc.hasNext())
+                {
+                    readLine +=  sc.nextLine();
+                }
+                sc.close();
+            }
+            JSONObject jobj = new JSONObject(readLine);
+            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+            System.out.println("These are all the leagues you can view data from");
+            System.out.println("\n");
+            for(int i =0; i<jsonarr_1.length();i++){
+                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+                System.out.println("The stage name is: " + jsonobj_1.get("name"));
+                System.out.println("The stage id: " + jsonobj_1.get("stage_id"));
+                System.out.println("\n");
+            }
+
+        }  catch (IOException e)  {
+            e.printStackTrace();
+        }
+    }
+
+    private static void playerRequest(){
+        try{
+            String url = "https://app.sportdataapi.com/api/v1/soccer/players?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=48&max_age=19";
+
+            URL urlForGetRequest1 = new URL(url);
+
+            String readLine = "";
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+            conection.setRequestMethod("GET");
+            conection.connect();
+            int responseCode = conection.getResponseCode();
+
+            if(responseCode !=200)
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            else
+            {
+                Scanner sc = new Scanner(urlForGetRequest1.openStream());
+                while(sc.hasNext())
+                {
+                    readLine +=  sc.nextLine();
+                }
+                sc.close();
+            }
+            JSONObject jobj = new JSONObject(readLine);
+            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+            System.out.println("These are all the the players you can view data from");
+            System.out.println("\n");
+            for(int i =0; i<jsonarr_1.length();i++){
+                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+                System.out.println("The player name is: " + jsonobj_1.get("firstname"));
+                System.out.println("The player surname is: " + jsonobj_1.get("lastname"));
+                System.out.println("The player age is: " + jsonobj_1.get("age"));
+                System.out.println("The player id is: " + jsonobj_1.get("player_id"));
+                System.out.println("The player weight is: " + jsonobj_1.get("weight"));
+                System.out.println("The player height is: " + jsonobj_1.get("height"));
+                System.out.println("\n");
+            }
+
+        }  catch (IOException e)  {
+            e.printStackTrace();
+        }
+
+    }
+
+    static void bookMakersRequest(){
+        try{
+            String url = "https://app.sportdataapi.com/api/v1/soccer/bookmakers?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+
+            URL urlForGetRequest1 = new URL(url);
+
+            String readLine = "";
+            HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+            conection.setRequestMethod("GET");
+            conection.connect();
+            int responseCode = conection.getResponseCode();
+
+            if(responseCode !=200)
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            else
+            {
+                Scanner sc = new Scanner(urlForGetRequest1.openStream());
+                while(sc.hasNext())
+                {
+                    readLine +=  sc.nextLine();
+                }
+                sc.close();
+            }
+            JSONObject jobj = new JSONObject(readLine);
+            JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+            System.out.println("These are all the the bookmakers you can view data from");
+            System.out.println("\n");
+            for(int i =0; i<jsonarr_1.length();i++){
+                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+                System.out.println("The bookmakers name is: " + jsonobj_1.get("name"));
+                System.out.println("The bookmakers id is: " + jsonobj_1.get("bookmaker_id"));
+
+                System.out.println("\n");
+            }
+
+        }  catch (IOException e)  {
+            e.printStackTrace();
+        }
+    }
+
+   private static void marketRequest(){
+       try{
+           String url = "https://app.sportdataapi.com/api/v1/soccer/markets?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+
+           URL urlForGetRequest1 = new URL(url);
+
+           String readLine = "";
+           HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+           conection.setRequestMethod("GET");
+           conection.connect();
+           int responseCode = conection.getResponseCode();
+
+           if(responseCode !=200)
+               throw new RuntimeException("HttpResponseCode: " + responseCode);
+           else
+           {
+               Scanner sc = new Scanner(urlForGetRequest1.openStream());
+               while(sc.hasNext())
+               {
+                   readLine +=  sc.nextLine();
+               }
+               sc.close();
+           }
+           JSONObject jobj = new JSONObject(readLine);
+           JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+           System.out.println("These are all the the Markets you can view data from");
+           System.out.println("\n");
+           for(int i =0; i<jsonarr_1.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+               System.out.println("The Market name is: " + jsonobj_1.get("name"));
+               System.out.println("The Market id is: " + jsonobj_1.get("market_id"));
+
+               System.out.println("\n");
+           }
+
+       }  catch (IOException e)  {
+           e.printStackTrace();
+       }
+   }
+
+   private static void venueRequest(){
+       try{
+           String url = "https://app.sportdataapi.com/api/v1/soccer/venues?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=48";
+
+           URL urlForGetRequest1 = new URL(url);
+
+           String readLine = "";
+           HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+           conection.setRequestMethod("GET");
+           conection.connect();
+           int responseCode = conection.getResponseCode();
+
+           if(responseCode !=200)
+               throw new RuntimeException("HttpResponseCode: " + responseCode);
+           else
+           {
+               Scanner sc = new Scanner(urlForGetRequest1.openStream());
+               while(sc.hasNext())
+               {
+                   readLine +=  sc.nextLine();
+               }
+               sc.close();
+           }
+           JSONObject jobj = new JSONObject(readLine);
+           JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+           System.out.println("These are all the the Markets you can view data from");
+           System.out.println("\n");
+           for(int i =0; i<jsonarr_1.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+               System.out.println("The venue name is: " + jsonobj_1.get("name"));
+               System.out.println("The venue id is: " + jsonobj_1.get("venue_id"));
+               System.out.println("The capacity is: " + jsonobj_1.get("capacity"));
+               System.out.println("The city is: " + jsonobj_1.get("city"));
+               System.out.println("The coountry is is: " + jsonobj_1.get("country_id"));
+
+               System.out.println("\n");
+           }
+
+       }  catch (IOException e)  {
+           e.printStackTrace();
+       }
+   }
+
+
+   private static void refereeRequest(){
+
+       try{
+           String url = "https://app.sportdataapi.com/api/v1/soccer/referees?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=81";
+
+           URL urlForGetRequest1 = new URL(url);
+
+           String readLine = "";
+           HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+           conection.setRequestMethod("GET");
+           conection.connect();
+           int responseCode = conection.getResponseCode();
+
+           if(responseCode !=200)
+               throw new RuntimeException("HttpResponseCode: " + responseCode);
+           else
+           {
+               Scanner sc = new Scanner(urlForGetRequest1.openStream());
+               while(sc.hasNext())
+               {
+                   readLine +=  sc.nextLine();
+               }
+               sc.close();
+           }
+           JSONObject jobj = new JSONObject(readLine);
+           JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+           System.out.println("These are all the referees you can view data from");
+           System.out.println("\n");
+           for(int i =0; i<jsonarr_1.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+               System.out.println("The referee name is: " + jsonobj_1.get("name"));
+               System.out.println("The referee id is: " + jsonobj_1.get("id"));
+               System.out.println("\n");
+           }
+
+       }  catch (IOException e)  {
+           e.printStackTrace();
+       }
+
+   }
+
+   private static void roundRequest(){
+       try{
+           String url = "https://app.sportdataapi.com/api/v1/soccer/rounds?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&season_id=503";
+
+           URL urlForGetRequest1 = new URL(url);
+
+           String readLine = "";
+           HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
+           conection.setRequestMethod("GET");
+           conection.connect();
+           int responseCode = conection.getResponseCode();
+
+           if(responseCode !=200)
+               throw new RuntimeException("HttpResponseCode: " + responseCode);
+           else
+           {
+               Scanner sc = new Scanner(urlForGetRequest1.openStream());
+               while(sc.hasNext())
+               {
+                   readLine +=  sc.nextLine();
+               }
+               sc.close();
+           }
+           JSONObject jobj = new JSONObject(readLine);
+           JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+           System.out.println("These are all the referees you can view data from");
+           System.out.println("\n");
+           for(int i =0; i<jsonarr_1.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+
+               System.out.println("The round name is: " + jsonobj_1.get("name"));
+               System.out.println("The round id is: " + jsonobj_1.get("round_id"));
+               System.out.println("The season id is: " + jsonobj_1.get("season_id"));
+               System.out.println("The season id is: " + jsonobj_1.get("league_name"));
+               System.out.println("The season id is: " + jsonobj_1.get("league_id"));
+
+               System.out.println("\n");
+           }
+
+       }  catch (IOException e)  {
+           e.printStackTrace();
+       }
+
+   }
 
 }
 
