@@ -3,6 +3,7 @@ import org.json.JSONObject;
 import java.net.URL;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class sportsData {
@@ -14,54 +15,58 @@ public class sportsData {
         System.out.println("\n");
         System.out.println("This app allows you to view the leagues, countries and teams");
         System.out.println("\n");
-
         do{
             Scanner sc =new Scanner(System.in);
             System.out.println("To view the list of different data enter");
-            int data = dataOptions(sc);
-            if( data<1|| data>13){
-                System.out.println("Please specify a number 1-13 to choose what data you want to display ");
-                data = dataOptions(sc);
+            try {
+                int data = dataOptions(sc);
+                if (data==1)  {
+                    leagueRequest();
+                }
+                else if(data==2) {
+                    countryRequest();
+                }
+                else if(data==3) {
+                    teamsRequest();
+                }
+                else if(data==4){
+                    seasonRequest();
+                }
+                else if (data==5){
+                    stageRequest();
+                }
+                else if(data==7){
+                    playerRequest();
+                }
+                else if(data==9){
+                    bookMakersRequest();
+                }
+                else if(data==10){
+                    marketRequest();
+                }
+                else if(data==11){
+                    venueRequest();
+                }
+                else if(data==12){
+                    refereeRequest();
+                }
+                else if(data==13){
+                    roundRequest();
+                }
+                else {
+                    System.out.println("Please specify a number 1-13 to choose what data you want to display ");
+                    data = dataOptions(sc);
+                }
+
+                System.out.println("Would you like to check more data on the sports app?");
+                System.out.println(" Enter 1 to view more data or any other integer to end the program");
+                if(sc.nextInt() != 1){
+                    stillRunning = false;
+                }
+            }catch (InputMismatchException ex) {
+                System.out.println("Invalid input! You have to enter a number");
             }
 
-            if (data==1)  {
-                leagueRequest();
-            }
-            else if(data==2) {
-                countryRequest();
-            }
-            else if(data==3) {
-                teamsRequest();
-            }
-            else if(data==4){
-                seasonRequest();
-            }
-            else if (data==5){
-                stageRequest();
-            }
-            else if(data==7){
-                playerRequest();
-            }
-            else if(data==9){
-                bookMakersRequest();
-            }
-            else if(data==10){
-                marketRequest();
-            }
-            else if(data==11){
-                venueRequest();
-            }
-            else if(data==12){
-                refereeRequest();
-            }
-            else if(data==13){
-                roundRequest();
-            }
-            System.out.println("Would you like to check more data on the sports app?");
-            System.out.println(" Enter 1 to view more data or any other integer to end the program");
-            if(sc.nextInt() != 1){
-                stillRunning = false;
-            }
         }while(stillRunning);
         System.out.println("Thank you. You've successfully completed the program");
         System.out.println("\n");
@@ -69,7 +74,6 @@ public class sportsData {
     }
 
     private static int dataOptions(Scanner sc) {
-        int data;
         System.out.println("1.leagues");
         System.out.println("2.countries");
         System.out.println("3.teams");
@@ -83,7 +87,7 @@ public class sportsData {
         System.out.println("11.Venues");
         System.out.println("12.Referees");
         System.out.println("13.Rounds\n");
-        data = sc.nextInt();
+       int data = sc.nextInt();
         return data;
     }
 
@@ -105,10 +109,9 @@ public class sportsData {
         }
     }
 
-
-
     private static void countryRequest() {
         try{
+
             String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
