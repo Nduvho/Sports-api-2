@@ -1,13 +1,12 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class utensils {
+public class Utils {
     static JSONArray apiCall(StringBuilder readLine, URL urlForGetRequest1) throws IOException {
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
         conection.setRequestMethod("GET");
@@ -34,9 +33,11 @@ public class utensils {
         return jsonarr_1;
     }
 
-    static int country_id() {
+    static int country_id() throws IOException {
+
         HashMap<String, Integer> id = new HashMap<>();
-        String info;
+
+        String countryName;
         id.put("1",112);
         id.put("Albania",9);
         id.put("Algeria",10);
@@ -164,10 +165,9 @@ public class utensils {
         id.put("Ethiopia",132);
 
         Scanner tc = new Scanner(System.in);
-        System.out.println("To view the teams on the default country press 1 or specify the league you would like to see ");
-        info = tc.nextLine();
-        int country_id= id.get(info);
+        System.out.println("To view the data on the default country press 1 or specify the country you would like to see ");
+        countryName = tc.nextLine();
 
-        return country_id;
+        return id.get(countryName);
     }
 }

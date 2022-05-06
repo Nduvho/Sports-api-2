@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class sportsData {
+public class SportsData {
+
+    private static final String namespace = "https://app.sportdataapi.com/api/v1/soccer";
+    private static final String api_key = "apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
 
     public static void main(String[] args) {
         Boolean stillRunning = true;
@@ -74,9 +77,9 @@ public class sportsData {
 
     private static int dataOptions(Scanner sc) {
         int data;
-        System.out.println("1.leagues");
-        System.out.println("2.countries");
-        System.out.println("3.teams");
+        System.out.println("1.Leagues");
+        System.out.println("2.Countries");
+        System.out.println("3.Teams");
         System.out.println("4.Seasons");
         System.out.println("5.Stages");
         System.out.println("6.Matches");
@@ -93,10 +96,10 @@ public class sportsData {
 
     private static void leagueRequest() {
         try{
-            String url = "https://app.sportdataapi.com/api/v1/soccer/leagues?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+            String url = namespace+"/leagues?" + api_key;
             StringBuilder readLine = new StringBuilder();
             URL urlForGetRequest1 = new URL(url);
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                 System.out.println("league: " + jsonobj_1.get("name"));
@@ -109,15 +112,15 @@ public class sportsData {
         }
     }
 
-    private static void countryRequest() {
+    static void countryRequest() {
         try{
 
-            String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
+            String url =namespace +  "/countries?" + api_key + "&continent";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<jsonarr_1.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+            JSONArray country = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for(int i =0; i<country.length();i++){
+                JSONObject jsonobj_1 = (JSONObject) country.get(i);
                 System.out.println("country: " + jsonobj_1.get("name"));
                 System.out.println("Continent: " + jsonobj_1.get("continent"));
                 System.out.println("Country code: " + jsonobj_1.get("country_code"));
@@ -131,14 +134,13 @@ public class sportsData {
 
     private static void teamsRequest() {
         try {
-            int country_id = utensils.country_id();
-
-            String url = "https://app.sportdataapi.com/api/v1/soccer/teams?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=" + country_id + "\"";
+            int country_id = Utils.country_id();
+            String url = namespace + "/teams?" + api_key +  "&country_id=" + country_id + "\"";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
-            for (int i = 0; i < jsonarr_1.length(); i++) {
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+            JSONArray league = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for (int i = 0; i < league.length(); i++) {
+                JSONObject jsonobj_1 = (JSONObject) league.get(i);
                 System.out.println("Team: " + jsonobj_1.get("name"));
                 System.out.println("Code: " + jsonobj_1.get("short_code") );
                 System.out.println("\n");
@@ -150,10 +152,10 @@ public class sportsData {
 
     public static void seasonRequest(){
        try{
-           String url = "https://app.sportdataapi.com/api/v1/soccer/seasons?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&league_id=314";
+           String url = namespace +  "/seasons?" + api_key + "&league_id=314";
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
            for(int i =0; i<jsonarr_1.length();i++){
                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                System.out.println("season: " + jsonobj_1.get("name"));
@@ -169,10 +171,10 @@ public class sportsData {
 
     private static void stageRequest(){
         try{
-            String url = "https://app.sportdataapi.com/api/v1/soccer/stages?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&season_id=3";
+            String url =namespace + "/stages?" + api_key + "&season_id=3";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                 System.out.println("stage name: " + jsonobj_1.get("name"));
@@ -186,10 +188,11 @@ public class sportsData {
 
     private static void playerRequest(){
         try{
-            String url = "https://app.sportdataapi.com/api/v1/soccer/players?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=48&max_age=19";
+            int country_id = Utils.country_id();
+            String url = namespace + "/players?" + api_key + "&country_id=" + country_id + "\"";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                 System.out.println("name: " + jsonobj_1.get("firstname"));
@@ -207,10 +210,10 @@ public class sportsData {
 
     static void bookMakersRequest(){
         try{
-            String url = "https://app.sportdataapi.com/api/v1/soccer/bookmakers?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+            String url = namespace +  "/bookmakers?" + api_key;
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
             for(int i =0; i<jsonarr_1.length();i++){
                 JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                 System.out.println("Bookmakers: " + jsonobj_1.get("name"));
@@ -224,10 +227,10 @@ public class sportsData {
 
    private static void marketRequest(){
        try{
-           String url = "https://app.sportdataapi.com/api/v1/soccer/markets?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+           String url =namespace +  "/markets?" + api_key;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
            for(int i =0; i<jsonarr_1.length();i++){
                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                System.out.println("Market: " + jsonobj_1.get("name"));
@@ -241,10 +244,11 @@ public class sportsData {
 
    private static void venueRequest(){
        try{
-           String url = "https://app.sportdataapi.com/api/v1/soccer/venues?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=48";
+           int country_id = Utils.country_id();
+           String url = namespace + "/venues?" +api_key + "&country_id=" + country_id;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
            for(int i =0; i<jsonarr_1.length();i++){
                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                System.out.println("Venue: " + jsonobj_1.get("name"));
@@ -261,10 +265,11 @@ public class sportsData {
 
    private static void refereeRequest(){
        try{
-           String url = "https://app.sportdataapi.com/api/v1/soccer/referees?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&country_id=81";
+           int country_id = Utils.country_id();
+           String url = namespace + "/referees?" + api_key + "&country_id=" + country_id;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
+           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
            for(int i =0; i<jsonarr_1.length();i++){
                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
                System.out.println("Referee: " + jsonobj_1.get("name"));
@@ -278,12 +283,13 @@ public class sportsData {
 
    private static void roundRequest(){
        try{
-           String url = "https://app.sportdataapi.com/api/v1/soccer/rounds?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&season_id=503";
+           String url = namespace + "/rounds?" + api_key + "&season_id=503";
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = utensils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<jsonarr_1.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
+           
+           JSONArray round = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<round.length();i++){
+               JSONObject jsonobj_1 = (JSONObject) round.get(i);
                System.out.println("Round: " + jsonobj_1.get("name"));
                System.out.println("id: " + jsonobj_1.get("round_id"));
                System.out.println("Season id: " + jsonobj_1.get("season_id"));
