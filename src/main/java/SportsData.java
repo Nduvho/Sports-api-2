@@ -99,12 +99,12 @@ public class SportsData {
             String url = namespace+"/leagues?" + api_key;
             StringBuilder readLine = new StringBuilder();
             URL urlForGetRequest1 = new URL(url);
-            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<jsonarr_1.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-                System.out.println("league: " + jsonobj_1.get("name"));
-                System.out.println("code: " + jsonobj_1.get("league_id"));
-                System.out.println("Country id: " + jsonobj_1.get("country_id"));
+            JSONArray league_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for(int i =0; i<league_array.length();i++){
+                JSONObject league = (JSONObject) league_array.get(i);
+                System.out.println("league: " + league.get("name"));
+                System.out.println("code: " + league.get("league_id"));
+                System.out.println("Country id: " + league.get("country_id"));
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -112,24 +112,29 @@ public class SportsData {
         }
     }
 
-    static void countryRequest() {
-        try{
-
-            String url =namespace +  "/countries?" + api_key + "&continent";
+    static int countryRequest() {
+        JSONObject country = null;
+        try {
+            String url = namespace + "/countries?" + api_key + "&continent";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray country = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<country.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) country.get(i);
-                System.out.println("country: " + jsonobj_1.get("name"));
-                System.out.println("Continent: " + jsonobj_1.get("continent"));
-                System.out.println("Country code: " + jsonobj_1.get("country_code"));
-                System.out.println("Country id: " + jsonobj_1.get("country_id"));
+            JSONArray country_array = Utils.apiCall(readLine, urlForGetRequest1);
+            for (int i = 0; i < country_array.length(); i++) {
+                country = (JSONObject) country_array.get(i);
+                System.out.println("country: " + country.get("name"));
+                System.out.println("Continent: " + country.get("continent"));
+                System.out.println("Country code: " + country.get("country_code"));
+                System.out.println("Country id: " + country.get("country_id"));
                 System.out.println("\n");
+
+
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        return (int) country.get("country_id");
     }
 
     private static void teamsRequest() {
@@ -138,11 +143,11 @@ public class SportsData {
             String url = namespace + "/teams?" + api_key +  "&country_id=" + country_id + "\"";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray league = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for (int i = 0; i < league.length(); i++) {
-                JSONObject jsonobj_1 = (JSONObject) league.get(i);
-                System.out.println("Team: " + jsonobj_1.get("name"));
-                System.out.println("Code: " + jsonobj_1.get("short_code") );
+            JSONArray teams_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for (int i = 0; i < teams_array.length(); i++) {
+                JSONObject teams = (JSONObject) teams_array.get(i);
+                System.out.println("Team: " + teams.get("name"));
+                System.out.println("Code: " + teams.get("short_code") );
                 System.out.println("\n");
             }
         } catch (IOException e){
@@ -155,13 +160,13 @@ public class SportsData {
            String url = namespace +  "/seasons?" + api_key + "&league_id=314";
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<jsonarr_1.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-               System.out.println("season: " + jsonobj_1.get("name"));
-               System.out.println("League code: " + jsonobj_1.get("league_id"));
-               System.out.println("State date: " + jsonobj_1.get("start_date"));
-               System.out.println("End date: " + jsonobj_1.get("end_date"));
+           JSONArray season_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<season_array.length();i++){
+               JSONObject season = (JSONObject) season_array.get(i);
+               System.out.println("season: " + season.get("name"));
+               System.out.println("League code: " + season.get("league_id"));
+               System.out.println("State date: " + season.get("start_date"));
+               System.out.println("End date: " + season.get("end_date"));
                System.out.println("\n");
            }
        }  catch (IOException e)  {
@@ -174,11 +179,11 @@ public class SportsData {
             String url =namespace + "/stages?" + api_key + "&season_id=3";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<jsonarr_1.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-                System.out.println("stage name: " + jsonobj_1.get("name"));
-                System.out.println("stage id: " + jsonobj_1.get("stage_id"));
+            JSONArray stage_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for(int i =0; i<stage_array.length();i++){
+                JSONObject stage = (JSONObject) stage_array.get(i);
+                System.out.println("stage name: " + stage.get("name"));
+                System.out.println("stage id: " + stage.get("stage_id"));
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -192,15 +197,15 @@ public class SportsData {
             String url = namespace + "/players?" + api_key + "&country_id=" + country_id + "\"";
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<jsonarr_1.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-                System.out.println("name: " + jsonobj_1.get("firstname"));
-                System.out.println("surname: " + jsonobj_1.get("lastname"));
-                System.out.println("Age: " + jsonobj_1.get("age"));
-                System.out.println("id: " + jsonobj_1.get("player_id"));
-                System.out.println("Weight: " + jsonobj_1.get("weight"));
-                System.out.println("Height: " + jsonobj_1.get("height"));
+            JSONArray player_request = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for(int i =0; i<player_request.length();i++){
+                JSONObject player = (JSONObject) player_request.get(i);
+                System.out.println("name: " + player.get("firstname"));
+                System.out.println("surname: " + player.get("lastname"));
+                System.out.println("Age: " + player.get("age"));
+                System.out.println("id: " + player.get("player_id"));
+                System.out.println("Weight: " + player.get("weight"));
+                System.out.println("Height: " + player.get("height"));
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -213,11 +218,11 @@ public class SportsData {
             String url = namespace +  "/bookmakers?" + api_key;
             URL urlForGetRequest1 = new URL(url);
             StringBuilder readLine = new StringBuilder();
-            JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<jsonarr_1.length();i++){
-                JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-                System.out.println("Bookmakers: " + jsonobj_1.get("name"));
-                System.out.println("id: " + jsonobj_1.get("bookmaker_id"));
+            JSONArray bookmakers_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+            for(int i =0; i<bookmakers_array.length();i++){
+                JSONObject bookmakers = (JSONObject) bookmakers_array.get(i);
+                System.out.println("Bookmakers: " + bookmakers.get("name"));
+                System.out.println("id: " + bookmakers.get("bookmaker_id"));
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -230,11 +235,11 @@ public class SportsData {
            String url =namespace +  "/markets?" + api_key;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<jsonarr_1.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-               System.out.println("Market: " + jsonobj_1.get("name"));
-               System.out.println("id: " + jsonobj_1.get("market_id"));
+           JSONArray market_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<market_array.length();i++){
+               JSONObject market = (JSONObject) market_array.get(i);
+               System.out.println("Market: " + market.get("name"));
+               System.out.println("id: " + market.get("market_id"));
                System.out.println("\n");
            }
        }  catch (IOException e)  {
@@ -248,14 +253,14 @@ public class SportsData {
            String url = namespace + "/venues?" +api_key + "&country_id=" + country_id;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<jsonarr_1.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-               System.out.println("Venue: " + jsonobj_1.get("name"));
-               System.out.println("id: " + jsonobj_1.get("venue_id"));
-               System.out.println("Capacity: " + jsonobj_1.get("capacity"));
-               System.out.println("City: " + jsonobj_1.get("city"));
-               System.out.println("Country id: " + jsonobj_1.get("country_id"));
+           JSONArray venue_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<venue_array.length();i++){
+               JSONObject venue = (JSONObject) venue_array.get(i);
+               System.out.println("Venue: " + venue.get("name"));
+               System.out.println("id: " + venue.get("venue_id"));
+               System.out.println("Capacity: " + venue.get("capacity"));
+               System.out.println("City: " + venue.get("city"));
+               System.out.println("Country id: " + venue.get("country_id"));
                System.out.println("\n");
            }
        }  catch (IOException e)  {
@@ -269,11 +274,11 @@ public class SportsData {
            String url = namespace + "/referees?" + api_key + "&country_id=" + country_id;
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
-           JSONArray jsonarr_1 = Utils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<jsonarr_1.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) jsonarr_1.get(i);
-               System.out.println("Referee: " + jsonobj_1.get("name"));
-               System.out.println("id: " + jsonobj_1.get("id"));
+           JSONArray referee_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<referee_array.length();i++){
+               JSONObject referee = (JSONObject) referee_array.get(i);
+               System.out.println("Referee: " + referee.get("name"));
+               System.out.println("id: " + referee.get("id"));
                System.out.println("\n");
            }
        }  catch (IOException e)  {
@@ -287,14 +292,14 @@ public class SportsData {
            URL urlForGetRequest1 = new URL(url);
            StringBuilder readLine = new StringBuilder();
            
-           JSONArray round = Utils.apiCall(readLine, urlForGetRequest1) ;
-           for(int i =0; i<round.length();i++){
-               JSONObject jsonobj_1 = (JSONObject) round.get(i);
-               System.out.println("Round: " + jsonobj_1.get("name"));
-               System.out.println("id: " + jsonobj_1.get("round_id"));
-               System.out.println("Season id: " + jsonobj_1.get("season_id"));
-               System.out.println("League: " + jsonobj_1.get("league_name"));
-               System.out.println("League id: " + jsonobj_1.get("league_id"));
+           JSONArray round_array = Utils.apiCall(readLine, urlForGetRequest1) ;
+           for(int i =0; i<round_array.length();i++){
+               JSONObject round = (JSONObject) round_array.get(i);
+               System.out.println("Round: " + round.get("name"));
+               System.out.println("id: " + round.get("round_id"));
+               System.out.println("Season id: " + round.get("season_id"));
+               System.out.println("League: " + round.get("league_name"));
+               System.out.println("League id: " + round.get("league_id"));
                System.out.println("\n");
            }
        }  catch (IOException e)  {
