@@ -1,12 +1,15 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.net.URL;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class SportsData {
 
+    static final Logger logger = Logger.getLogger(SportsData.class.getSimpleName());
     private static final String namespace = "https://app.sportdataapi.com/api/v1/soccer";
     private static final String api_key = "apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
 
@@ -97,14 +100,16 @@ public class SportsData {
     private static void leagueRequest() {
         try{
             String url = namespace+"/leagues?" + api_key;
-            StringBuilder readLine = new StringBuilder();
-            URL urlForGetRequest1 = new URL(url);
-            JSONArray league_array = Utils.apiCall(readLine, urlForGetRequest1) ;
-            for(int i =0; i<league_array.length();i++){
-                JSONObject league = (JSONObject) league_array.get(i);
-                System.out.println("league: " + league.get("name"));
-                System.out.println("code: " + league.get("league_id"));
-                System.out.println("Country id: " + league.get("country_id"));
+            String responseBodyString = Utils.apiRequest(url);
+            // logger.info(responseBodyString);
+            ObjectMapper leagueMapper = new ObjectMapper();
+            LeagueResponse leagueResponse = leagueMapper.readValue(responseBodyString, LeagueResponse.class);
+            for(int i = 0; i<leagueResponse.getData().size();i++)
+            {
+                System.out.println("Name: " + leagueResponse.getData().get(i).getName());
+                System.out.println("id: " + leagueResponse.getData().get(i).getLeague_id());
+                System.out.println("Country id: " + leagueResponse.getData().get(i).getCountry_id());
+
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -112,29 +117,27 @@ public class SportsData {
         }
     }
 
-    static int countryRequest() {
-        JSONObject country = null;
+   private static void countryRequest() {
+
         try {
             String url = namespace + "/countries?" + api_key + "&continent";
-            URL urlForGetRequest1 = new URL(url);
-            StringBuilder readLine = new StringBuilder();
-            JSONArray country_array = Utils.apiCall(readLine, urlForGetRequest1);
-            for (int i = 0; i < country_array.length(); i++) {
-                country = (JSONObject) country_array.get(i);
-                System.out.println("country: " + country.get("name"));
-                System.out.println("Continent: " + country.get("continent"));
-                System.out.println("Country code: " + country.get("country_code"));
-                System.out.println("Country id: " + country.get("country_id"));
+            String responseBodyString = Utils.apiRequest(url);
+           // logger.info(responseBodyString);
+            ObjectMapper countryMapper = new ObjectMapper();
+            CountryResponse countryResponse = countryMapper.readValue(responseBodyString, CountryResponse.class);
+            for(int i = 0; i<countryResponse.getData().size();i++)
+            {
+                System.out.println("Name: " + countryResponse.getData().get(i).getName());
+                System.out.println("id: " + countryResponse.getData().get(i).getCountry_id());
+                System.out.println("Code: " + countryResponse.getData().get(i).getCountry_code());
+                System.out.println("Continent: " +countryResponse.getData().get(i).getContinent());
                 System.out.println("\n");
-
-
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return (int) country.get("country_id");
     }
 
     private static void teamsRequest() {

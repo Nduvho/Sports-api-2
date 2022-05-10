@@ -1,3 +1,6 @@
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -6,7 +9,28 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
+
 public class Utils {
+
+    public static String apiRequest(String url){
+        final Request request = new Request.Builder()
+                .url(url)
+                .get().build();
+        OkHttpClient client = new OkHttpClient();
+
+        try {
+            Response resp = client.newCall(request).execute();
+            return resp.body().string();
+        } catch (IOException e) {
+           // logger.info("API Request Exception Message: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
     static JSONArray apiCall(StringBuilder readLine, URL urlForGetRequest1) throws IOException {
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest1.openConnection();
         conection.setRequestMethod("GET");
@@ -27,6 +51,7 @@ public class Utils {
 
         JSONObject jobj = new JSONObject(readLine.toString());
         JSONArray jsonarr_1 = (JSONArray) jobj.get("data");
+
         System.out.println("These are all the data you asked to view");
         System.out.println("\n");
 
@@ -34,6 +59,25 @@ public class Utils {
     }
 
     static int country_id() throws IOException {
+
+        JSONObject country = null;
+        try {
+            String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
+            URL urlForGetRequest1 = new URL(url);
+            StringBuilder readLine = new StringBuilder();
+            JSONArray country_array = Utils.apiCall(readLine, urlForGetRequest1);
+            for (int i = 0; i < country_array.length(); i++) {
+                country = (JSONObject) country_array.get(i);
+                String countryname = (String) country.get("name");
+
+                int  country_id = (int) country.get("country_id");
+
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         HashMap<String, Integer> id = new HashMap<>();
 
