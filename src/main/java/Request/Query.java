@@ -1,7 +1,10 @@
+package Request;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Query {
+    @JsonIgnoreProperties(ignoreUnknown = true)
    private String apiKey;
    private int countryId;
 

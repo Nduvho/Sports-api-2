@@ -1,3 +1,7 @@
+package Request;
+
+import Request.Country;
+import Request.Query;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
@@ -9,11 +13,11 @@ public class CountryResponse {
 
     @Override
    public String toString(){
-       return "Country" + data + query;
+       return "Request.Country" + data + query;
 
     }
 
-    public List < Country> getData() {
+    public List <Country> getData() {
         return data;
     }
 

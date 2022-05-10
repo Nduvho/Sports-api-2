@@ -60,28 +60,10 @@ public class Utils {
 
     static int country_id() throws IOException {
 
-        JSONObject country = null;
-        try {
-            String url = "https://app.sportdataapi.com/api/v1/soccer/countries?apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35&continent";
-            URL urlForGetRequest1 = new URL(url);
-            StringBuilder readLine = new StringBuilder();
-            JSONArray country_array = Utils.apiCall(readLine, urlForGetRequest1);
-            for (int i = 0; i < country_array.length(); i++) {
-                country = (JSONObject) country_array.get(i);
-                String countryname = (String) country.get("name");
-
-                int  country_id = (int) country.get("country_id");
-
-
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         HashMap<String, Integer> id = new HashMap<>();
 
         String countryName;
+
         id.put("1",112);
         id.put("Albania",9);
         id.put("Algeria",10);

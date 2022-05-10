@@ -1,21 +1,25 @@
+package Request;
+
+import Request.BookMakers;
+import Request.Query;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LeagueResponse {
-    private List< League> data;
+public class BookMakersResponse {
+    private List<BookMakers> data;
     private Query query;
 
     @Override
     public String toString(){
-        return "League" + data + query;
+        return "Bookmakers " + data + query;
     }
 
-    public List<League> getData() {
+    public List<BookMakers> getData() {
         return data;
     }
 
-    public void setData(List<League> data) {
+    public void setData(List<BookMakers> data) {
         this.data = data;
     }
 
