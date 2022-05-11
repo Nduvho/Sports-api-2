@@ -1,12 +1,16 @@
 package com.sportdataapi;
 
-import com.sportdataapi.Request.Country;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sportdataapi.Request.CountryResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import static com.sportdataapi.SportsData.APIHEADER;
+import static com.sportdataapi.SportsData.BASEURL;
 
 public class Utils {
 
@@ -28,19 +32,23 @@ public class Utils {
 
     static int country_id() throws IOException {
 
-        Country country = new Country();
-        String countryName = country.getName();
-        int country_id = country.getCountry_id();
-
         HashMap<String, Integer> id = new HashMap<>();
-        id.put(countryName,country_id);
-
+        try {
+            String url = BASEURL + "/countries?" + APIHEADER + "&continent";
+            String responseBodyString = Utils.apiRequest(url);
+            ObjectMapper countryMapper = new ObjectMapper();
+            CountryResponse countryResponse = countryMapper.readValue(responseBodyString, CountryResponse.class);
+            for(int i = 0; i<countryResponse.getData().size();i++)
+            {
+                id.put(countryResponse.getData().get(i).getName(),countryResponse.getData().get(i).getCountry_id());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scanner tc = new Scanner(System.in);
         System.out.println("To view the data specify the country you would like to see ");
         String Name = tc.nextLine();
 
-        Name = countryName;
-
-            return id.get(countryName);
+        return id.get(Name);
     }
 }
