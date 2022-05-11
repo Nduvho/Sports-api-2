@@ -1,8 +1,6 @@
-
 import Request.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -74,7 +72,6 @@ public class SportsData {
             }catch (InputMismatchException ex) {
                 System.out.println("Invalid input! You have to enter a number");
             }
-
         }while(stillRunning);
         System.out.println("Thank you. You've successfully completed the program");
         System.out.println("\n");
@@ -112,7 +109,6 @@ public class SportsData {
                 System.out.println("Name: " + leagueResponse.getData().get(i).getName());
                 System.out.println("id: " + leagueResponse.getData().get(i).getLeague_id());
                 System.out.println("Request.Country id: " + leagueResponse.getData().get(i).getCountry_id());
-
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -154,7 +150,6 @@ public class SportsData {
                 System.out.println("Name: " + teamResponse.getData().get(i).getName());
                 System.out.println("id: " + teamResponse.getData().get(i).getTeam_id());
                 System.out.println("Short code: " + teamResponse.getData().get(i).getShort_code());
-
                 System.out.println("\n");
             }
         } catch (IOException e){
