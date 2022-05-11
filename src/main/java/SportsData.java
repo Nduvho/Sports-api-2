@@ -66,9 +66,13 @@ public class SportsData {
                 }
 
                 System.out.println("Would you like to check more data on the sports app?");
-                System.out.println("Enter 1 to view more data or any other integer to end the program");
-                if(sc.nextInt() != 1){
+                System.out.println("Enter 77 to end the program or any other integer continue");
+                if(sc.nextInt() == 77){
                     stillRunning = false;
+                }
+                else if(sc.nextInt() == 1)
+                {
+                    stillRunning = true;
                 }
             }catch (InputMismatchException ex) {
                 System.out.println("Invalid input! You have to enter a number");
@@ -107,7 +111,7 @@ public class SportsData {
             for(int i = 0; i<leagueResponse.getData().size();i++)
             {
                 System.out.println("Name: " + leagueResponse.getData().get(i).getName());
-                System.out.println("Request.Country id: " + leagueResponse.getData().get(i).getCountry_id());
+                System.out.println("Country id: " + leagueResponse.getData().get(i).getCountry_id());
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
@@ -160,7 +164,7 @@ public class SportsData {
            for(int i = 0; i<seasonResponse.getData().size();i++)
            {
                System.out.println("Name: " + seasonResponse.getData().get(i).getName());
-               System.out.println("Request.Country id: " + seasonResponse.getData().get(i).getCountry_id());
+               System.out.println("Country id: " + seasonResponse.getData().get(i).getCountry_id());
                System.out.println("Start date: " + seasonResponse.getData().get(i).getStart_date());
                System.out.println("End date: " + seasonResponse.getData().get(i).getEnd_date());
                System.out.println("\n");
