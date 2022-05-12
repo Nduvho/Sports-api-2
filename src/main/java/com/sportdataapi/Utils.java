@@ -2,15 +2,12 @@ package com.sportdataapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sportdataapi.sportdata.Country;
 import com.sportdataapi.sportdata.CountryResponse;
 import com.sportdataapi.sportdata.LeagueResponse;
 import com.sportdataapi.sportdata.SeasonResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.jetbrains.kotlin.resolve.calls.smartcasts.IdentifierInfo;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,7 +24,6 @@ public class Utils {
                 .url(url)
                 .get().build();
         OkHttpClient client = new OkHttpClient();
-
         try {
             Response resp = client.newCall(request).execute();
             return resp.body().string();
@@ -43,7 +39,6 @@ public class Utils {
         Scanner tc = new Scanner(System.in);
         System.out.println("To view the data specify the country you would like to see ");
         String Name = tc.nextLine();
-
         HashMap<String, Integer> id = new HashMap<>();
         try {
             String url = BASEURL + "/countries?"  + "&continent";
@@ -80,14 +75,13 @@ public class Utils {
             for(int i = 0; i<leagueResponse.getData().size();i++)
             {
                 league_id.put(leagueResponse.getData().get(i).getName(),leagueResponse.getData().get(i).getLeague_id());
-
             }
         }  catch (IOException e)  {
             e.printStackTrace();
         }
 
         if(league_id.get(leagueName) ==null) {
-            System.out.println("Invalid league,Please enter a valid country");
+            System.out.println("Invalid League,Please enter a valid League");
         }
         else
             league = league_id.get(leagueName);
@@ -117,7 +111,7 @@ public class Utils {
         }
 
         if(season_id.get(seasonName) ==null) {
-            System.out.println("Invalid country,Please enter a valid country");
+            System.out.println("Invalid Season,Please enter a valid Season");
         }
         else
             season = season_id.get(seasonName);
