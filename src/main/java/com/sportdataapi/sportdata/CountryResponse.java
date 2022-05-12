@@ -11,7 +11,7 @@ public class CountryResponse {
 
     @Override
    public String toString(){
-       return "Request.Country" + data + query;
+       return "Country" + data + query;
 
     }
 

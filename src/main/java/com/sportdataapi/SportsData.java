@@ -174,6 +174,7 @@ public class SportsData {
            for(int i = 0; i<seasonResponse.getData().size();i++)
            {
                System.out.println("Name: " + seasonResponse.getData().get(i).getName());
+               System.out.println(seasonResponse.getData().get(i).getSeason_id());
                System.out.println("Start date: " + seasonResponse.getData().get(i).getStart_date());
                System.out.println("End date: " + seasonResponse.getData().get(i).getEnd_date());
                System.out.println("\n");

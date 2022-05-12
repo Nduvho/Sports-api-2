@@ -2,12 +2,15 @@ package com.sportdataapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sportdataapi.sportdata.Country;
 import com.sportdataapi.sportdata.CountryResponse;
 import com.sportdataapi.sportdata.LeagueResponse;
 import com.sportdataapi.sportdata.SeasonResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.jetbrains.kotlin.resolve.calls.smartcasts.IdentifierInfo;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -36,6 +39,10 @@ public class Utils {
     }
 
     static int getCountry_id() throws IOException {
+        int country_id = 0;
+        Scanner tc = new Scanner(System.in);
+        System.out.println("To view the data specify the country you would like to see ");
+        String Name = tc.nextLine();
 
         HashMap<String, Integer> id = new HashMap<>();
         try {
@@ -45,19 +52,25 @@ public class Utils {
             CountryResponse countryResponse = countryMapper.readValue(responseBodyString, CountryResponse.class);
             for(int i = 0; i<countryResponse.getData().size();i++)
             {
-                id.put(countryResponse.getData().get(i).getName(),countryResponse.getData().get(i).getCountry_id());
+                id.put(countryResponse.getData().get(i).getName(), countryResponse.getData().get(i).getCountry_id());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scanner tc = new Scanner(System.in);
-        System.out.println("To view the data specify the country you would like to see ");
-        String name = tc.nextLine();
+         if(id.get(Name) ==null) {
+             System.out.println("Invalid country,Please enter a valid country");
+         }
+         else
+             country_id = id.get(Name);
 
-        return id.get(name);
+        return country_id;
     }
 
     static int getLeague_id() throws IOException{
+        int league = 0;
+        Scanner tc = new Scanner(System.in);
+        System.out.println("To view the data specify the League you would like to see ");
+        String leagueName = tc.nextLine();
         HashMap<String,Integer> league_id = new HashMap<>();
         try{
             String url = BASEURL +"/leagues?" + APIKEY;
@@ -67,18 +80,27 @@ public class Utils {
             for(int i = 0; i<leagueResponse.getData().size();i++)
             {
                 league_id.put(leagueResponse.getData().get(i).getName(),leagueResponse.getData().get(i).getLeague_id());
+
             }
         }  catch (IOException e)  {
             e.printStackTrace();
         }
-        Scanner tc = new Scanner(System.in);
-        System.out.println("To view the data specify the League you would like to see ");
-        String leagueName = tc.nextLine();
 
-        return league_id.get(leagueName);
+        if(league_id.get(leagueName) ==null) {
+            System.out.println("Invalid league,Please enter a valid country");
+        }
+        else
+            league = league_id.get(leagueName);
+
+        return league;
     }
 
     static int getSeason_id() throws IOException{
+        int season =0;
+        Scanner tc = new Scanner(System.in);
+        System.out.println("To view the data specify the Season you would like to see ");
+        String seasonName = tc.nextLine();
+
         HashMap<String,Integer> season_id = new HashMap<>();
         try{
             int league_id = Utils.getLeague_id();
@@ -89,17 +111,17 @@ public class Utils {
             for(int i = 0; i<seasonResponse.getData().size();i++)
             {
                 season_id.put( seasonResponse.getData().get(i).getName(),seasonResponse.getData().get(i).getSeason_id());
-
             }
         }  catch (IOException e)  {
             e.printStackTrace();
         }
 
-        Scanner tc = new Scanner(System.in);
-        System.out.println("To view the data specify the Season you would like to see ");
-        String seasonName = tc.nextLine();
-
-        return season_id.get(seasonName);
+        if(season_id.get(seasonName) ==null) {
+            System.out.println("Invalid country,Please enter a valid country");
+        }
+        else
+            season = season_id.get(seasonName);
+        return season;
     }
 
 }

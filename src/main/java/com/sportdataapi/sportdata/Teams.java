@@ -10,7 +10,7 @@ public class Teams {
 
     @Override
     public String toString(){
-        return "team name" + name;
+        return "Team Name" + name;
 
     }
 

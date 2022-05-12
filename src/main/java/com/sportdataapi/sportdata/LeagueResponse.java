@@ -10,7 +10,7 @@ public class LeagueResponse {
 
     @Override
     public String toString(){
-        return "Request.League" + data + query;
+        return "League" + data + query;
     }
 
     public List<League> getData() {

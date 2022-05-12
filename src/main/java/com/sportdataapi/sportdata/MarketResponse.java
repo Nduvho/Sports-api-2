@@ -11,7 +11,7 @@ public class MarketResponse {
 
     @Override
     public String toString(){
-        return "Markets " + data + query;
+        return "Market " + data + query;
     }
 
     public List<Market> getData() {

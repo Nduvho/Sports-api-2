@@ -15,7 +15,7 @@ public class Player {
 
   @Override
   public String toString(){
-    return "Player name" + firstname + " " + lastname;
+    return "Player Name" + firstname + " " + lastname;
   }
 
   public int getPlayer_id() {

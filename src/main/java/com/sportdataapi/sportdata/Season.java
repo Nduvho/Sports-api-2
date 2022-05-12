@@ -12,7 +12,7 @@ public class Season {
 
     @Override
     public String toString(){
-        return "Season name" + name;
+        return "Season Name" + name;
 
     }
 

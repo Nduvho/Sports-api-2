@@ -13,7 +13,7 @@ public class Round {
 
     @Override
     public String toString(){
-        return "round name" + name + " of " + league_name;
+        return "Round Name" + name + " of " + league_name;
     }
 
 

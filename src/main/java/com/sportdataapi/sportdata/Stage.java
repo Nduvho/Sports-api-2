@@ -10,7 +10,7 @@ public class Stage {
 
     @Override
     public String toString(){
-        return "Stage name" + name;
+        return "Stage Name" + name;
 
     }
 

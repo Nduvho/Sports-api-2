@@ -9,7 +9,7 @@ public class BookMakers {
 
     @Override
     public String toString(){
-        return "Bookmaker name" + name;
+        return "Bookmaker Name" + name;
     }
 
     public int getBookmaker_id() {
