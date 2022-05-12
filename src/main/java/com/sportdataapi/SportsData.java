@@ -16,9 +16,9 @@ public class SportsData {
         Boolean stillRunning = true;
 
         System.out.println("Welcome to the Sports data app");
-        System.out.println("\n");
+        System.out.println("\t");
         System.out.println("This app allows you to view the leagues, countries and teams");
-        System.out.println("\n");
+        System.out.println("\t");
         do{
             Scanner sc =new Scanner(System.in);
             System.out.println("To view the list of different data enter");
@@ -79,7 +79,7 @@ public class SportsData {
             }
         }while(stillRunning);
         System.out.println("Thank you. You've successfully completed the program");
-        System.out.println("\n");
+        System.out.println("\t");
         System.out.println("You may close the session");
     }
 
@@ -97,7 +97,7 @@ public class SportsData {
         System.out.println("10.Venues");
         System.out.println("11.Referees");
         System.out.println("12.Rounds");
-        System.out.println("13.To end the program\n");
+        System.out.println("13.To end the program\t");
        data = sc.nextInt();
         return data;
     }
@@ -111,7 +111,7 @@ public class SportsData {
             for(int i = 0; i<leagueResponse.getData().size();i++)
             {
                 System.out.println("Name: " + leagueResponse.getData().get(i).getName());
-                System.out.println("\n");
+                System.out.println("\t");
             }
         }  catch (IOException e)  {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class SportsData {
                 if(countryResponse.getData().get(i).getCountry_code() !=null) {
                     System.out.println("Name: " + countryResponse.getData().get(i).getName());
                     System.out.println("Continent: " + countryResponse.getData().get(i).getContinent());
-                    System.out.println("\n");
+                    System.out.println("\t");
                 }
             }
         } catch (IOException e) {
@@ -148,7 +148,7 @@ public class SportsData {
             {
                 System.out.println("Name: " + teamResponse.getData().get(i).getName());
                 System.out.println("Short code: " + teamResponse.getData().get(i).getShort_code());
-                System.out.println("\n");
+                System.out.println("\t");
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -167,7 +167,7 @@ public class SportsData {
                System.out.println("Name: " + seasonResponse.getData().get(i).getName());
                System.out.println("Start date: " + seasonResponse.getData().get(i).getStart_date());
                System.out.println("End date: " + seasonResponse.getData().get(i).getEnd_date());
-               System.out.println("\n");
+               System.out.println("\t");
            }
        }  catch (IOException e)  {
            e.printStackTrace();
@@ -184,7 +184,7 @@ public class SportsData {
             for(int i = 0; i<stageResponse.getData().size();i++)
             {
                 System.out.println("Name: " + stageResponse.getData().get(i).getName());
-                System.out.println("\n");
+                System.out.println("\t");
             }
         }  catch (IOException e)  {
             e.printStackTrace();
@@ -205,7 +205,7 @@ public class SportsData {
                 System.out.println("Age: " + playerResponse.getData().get(i).getAge());
                 System.out.println("Weight: " + playerResponse.getData().get(i).getWeight());
                 System.out.println("Height: " + playerResponse.getData().get(i).getHeight());
-                System.out.println("\n");
+                System.out.println("\t");
             }
         }  catch (IOException e)  {
             e.printStackTrace();
@@ -221,7 +221,7 @@ public class SportsData {
             for(int i = 0; i<bookmakerResponse.getData().size();i++)
             {
                 System.out.println("Name: " + bookmakerResponse.getData().get(i).getName());
-                System.out.println("\n");
+                System.out.println("\t");
             }
         }  catch (IOException e)  {
             e.printStackTrace();
@@ -237,7 +237,7 @@ public class SportsData {
            for(int i = 0; i<marketResponse.getData().size();i++)
            {
                System.out.println("Name: " + marketResponse.getData().get(i).getName());
-               System.out.println("\n");
+               System.out.println("\t");
            }
        }  catch (IOException e)  {
            e.printStackTrace();
@@ -256,7 +256,7 @@ public class SportsData {
                System.out.println("Name: " + venueResponse.getData().get(i).getName());
                System.out.println("Capacity: " + venueResponse.getData().get(i).getCapacity());
                System.out.println("City: " + venueResponse.getData().get(i).getCity());
-               System.out.println("\n");
+               System.out.println("\t");
            }
        }  catch (IOException e)  {
            e.printStackTrace();
@@ -274,7 +274,7 @@ public class SportsData {
            {
                System.out.println("First Name: " + refereeResponse.getData().get(i).getFirstname());
                System.out.println("Last Name: " + refereeResponse.getData().get(i).getLastname());
-               System.out.println("\n");
+               System.out.println("\t");
            }
        }  catch (IOException e)  {
            e.printStackTrace();
@@ -293,7 +293,7 @@ public class SportsData {
                System.out.println("Name: " + roundResponse.getData().get(i).getName());
                System.out.println("Is current: " + roundResponse.getData().get(i).getIs_current());
                System.out.println("League: " + roundResponse.getData().get(i).getLeague_name());
-               System.out.println("\n");
+               System.out.println("\t");
            }
        }  catch (IOException e)  {
            e.printStackTrace();

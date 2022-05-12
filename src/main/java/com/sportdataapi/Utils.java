@@ -54,6 +54,8 @@ public class Utils {
         }
          if(id.get(Name) ==null) {
              System.out.println("Invalid country,Please enter a valid country");
+             String cname = tc.nextLine();
+             id.get(cname);
          }
          else
              country_id = id.get(Name);
