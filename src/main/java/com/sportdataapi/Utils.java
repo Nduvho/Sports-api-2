@@ -1,7 +1,10 @@
 package com.sportdataapi;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sportdataapi.Request.CountryResponse;
+import com.sportdataapi.Request.LeagueResponse;
+import com.sportdataapi.Request.SeasonResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -9,13 +12,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import static com.sportdataapi.SportsData.APIHEADER;
-import static com.sportdataapi.SportsData.BASEURL;
-
 public class Utils {
-
+    public static final String BASEURL = "https://app.sportdataapi.com/api/v1/soccer";
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final String APIKEY= "1f8177a0-ba72-11ec-b83e-09e34675ae35";
     public static String apiRequest(String url){
         final Request request = new Request.Builder()
+                .url(BASEURL + url)
+                .addHeader("apikey",APIKEY)
                 .url(url)
                 .get().build();
         OkHttpClient client = new OkHttpClient();
@@ -30,11 +34,11 @@ public class Utils {
         }
     }
 
-    static int country_id() throws IOException {
+    static int getCountry_id() throws IOException {
 
         HashMap<String, Integer> id = new HashMap<>();
         try {
-            String url = BASEURL + "/countries?" + APIHEADER + "&continent";
+            String url = BASEURL + "/countries?"  + "&continent";
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper countryMapper = new ObjectMapper();
             CountryResponse countryResponse = countryMapper.readValue(responseBodyString, CountryResponse.class);
@@ -51,4 +55,51 @@ public class Utils {
 
         return id.get(Name);
     }
+
+    static int getLeague_id() throws IOException{
+        HashMap<String,Integer> league_id = new HashMap<>();
+        try{
+            String url = BASEURL +"/leagues?" + APIKEY;
+            String responseBodyString = Utils.apiRequest(url);
+            ObjectMapper leagueMapper = new ObjectMapper();
+            LeagueResponse leagueResponse = leagueMapper.readValue(responseBodyString, LeagueResponse.class);
+            for(int i = 0; i<leagueResponse.getData().size();i++)
+            {
+                league_id.put(leagueResponse.getData().get(i).getName(),leagueResponse.getData().get(i).getLeague_id());
+            }
+        }  catch (IOException e)  {
+            e.printStackTrace();
+        }
+        Scanner tc = new Scanner(System.in);
+        System.out.println("To view the data specify the League you would like to see ");
+        String leagueName = tc.nextLine();
+
+        return league_id.get(leagueName);
+    }
+
+    static int getSeason_id() throws IOException{
+        HashMap<String,Integer> season_id = new HashMap<>();
+        try{
+            int league_id = Utils.getLeague_id();
+            String url = BASEURL +  "/seasons?"  + "&league_id=" + league_id + "\"";
+            String responseBodyString = Utils.apiRequest(url);
+            ObjectMapper seasonMapper = new ObjectMapper();
+            SeasonResponse seasonResponse = seasonMapper.readValue(responseBodyString, SeasonResponse.class);
+            for(int i = 0; i<seasonResponse.getData().size();i++)
+            {
+                season_id.put( seasonResponse.getData().get(i).getName(),seasonResponse.getData().get(i).getSeason_id());
+
+            }
+        }  catch (IOException e)  {
+            e.printStackTrace();
+        }
+
+        Scanner tc = new Scanner(System.in);
+        System.out.println("To view the data specify the Season you would like to see ");
+        String seasonName = tc.nextLine();
+
+        return season_id.get(seasonName);
+    }
+
+
 }

@@ -3,12 +3,10 @@ package com.sportdataapi;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sportdataapi.Request.*;
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Logger;
-
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SportsData {
@@ -16,7 +14,7 @@ public class SportsData {
     public static final Logger logger = Logger.getLogger(SportsData.class.getSimpleName());
     public static final String BASEURL = "https://app.sportdataapi.com/api/v1/soccer";
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final String APIHEADER= "apikey=1f8177a0-ba72-11ec-b83e-09e34675ae35";
+    public static final String APIKEY= "1f8177a0-ba72-11ec-b83e-09e34675ae35";
 
     public static void main(String[] args) {
         Boolean stillRunning = true;
@@ -31,6 +29,7 @@ public class SportsData {
             try {
                 int data = dataOptions(sc);
                 if (data==1)  {
+                    System.out.println("League information");
                     leagueRequest();
                 }
                 else if(data==2) {
@@ -111,7 +110,7 @@ public class SportsData {
 
     private static void leagueRequest() {
         try{
-            String url = BASEURL +"/leagues?" + APIHEADER;
+            String url = BASEURL +"/leagues?" + APIKEY;
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper leagueMapper = new ObjectMapper();
             LeagueResponse leagueResponse = leagueMapper.readValue(responseBodyString, LeagueResponse.class);
@@ -127,17 +126,19 @@ public class SportsData {
     }
 
    static void countryRequest() {
-
         try {
-            String url = BASEURL + "/countries?" + APIHEADER + "&continent";
+            String url = BASEURL + "/countries?" + "&continent";
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper countryMapper = new ObjectMapper();
             CountryResponse countryResponse = countryMapper.readValue(responseBodyString, CountryResponse.class);
+            System.out.println("*****list of countries*****\n");
             for(int i = 0; i<countryResponse.getData().size();i++)
             {
-                System.out.println("Name: " + countryResponse.getData().get(i).getName());
-                System.out.println("Continent: " +countryResponse.getData().get(i).getContinent());
-                System.out.println("\n");
+                if(countryResponse.getData().get(i).getCountry_code() !=null) {
+                    System.out.println("Name: " + countryResponse.getData().get(i).getName());
+                    System.out.println("Continent: " + countryResponse.getData().get(i).getContinent());
+                    System.out.println("\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,8 +147,8 @@ public class SportsData {
 
     private static void teamsRequest() {
         try {
-            int country_id = Utils.country_id();
-            String url = BASEURL + "/teams?" + APIHEADER +  "&country_id=" + country_id + "\"";
+            int country_id = Utils.getCountry_id();
+            String url = BASEURL + "/teams?" +  "&country_id=" + country_id + "\"";
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper teamMapper = new ObjectMapper();
             TeamsResponse teamResponse = teamMapper.readValue(responseBodyString, TeamsResponse.class);
@@ -164,14 +165,14 @@ public class SportsData {
 
     public static void seasonRequest(){
        try{
-           String url = BASEURL +  "/seasons?" + APIHEADER + "&league_id=314";
+           int league_id = Utils.getLeague_id();
+           String url = BASEURL +  "/seasons?"  + "&league_id=" + league_id + "\"";
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper seasonMapper = new ObjectMapper();
            SeasonResponse seasonResponse = seasonMapper.readValue(responseBodyString, SeasonResponse.class);
            for(int i = 0; i<seasonResponse.getData().size();i++)
            {
                System.out.println("Name: " + seasonResponse.getData().get(i).getName());
-               System.out.println("Country id: " + seasonResponse.getData().get(i).getCountry_id());
                System.out.println("Start date: " + seasonResponse.getData().get(i).getStart_date());
                System.out.println("End date: " + seasonResponse.getData().get(i).getEnd_date());
                System.out.println("\n");
@@ -183,7 +184,8 @@ public class SportsData {
 
     private static void stageRequest(){
         try{
-            String url =BASEURL + "/stages?" + APIHEADER + "&season_id=3";
+            int season_id = Utils.getSeason_id();
+            String url =BASEURL + "/stages?"  + "&season_id=" + season_id + "\"";
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper stageMapper = new ObjectMapper();
             StageResponse stageResponse = stageMapper.readValue(responseBodyString, StageResponse.class);
@@ -199,8 +201,8 @@ public class SportsData {
 
     private static void playerRequest(){
         try{
-            int country_id = Utils.country_id();
-            String url = BASEURL + "/players?" + APIHEADER + "&country_id=" + country_id + "\"";
+            int country_id = Utils.getCountry_id();
+            String url = BASEURL + "/players?" + "&country_id=" + country_id + "\"";
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper playerMapper = new ObjectMapper();
             PlayerResponse playerResponse = playerMapper.readValue(responseBodyString, PlayerResponse.class);
@@ -220,7 +222,7 @@ public class SportsData {
 
     static void bookMakersRequest(){
         try{
-            String url = BASEURL +  "/bookmakers?" + APIHEADER;
+            String url = BASEURL +  "/bookmakers?" + APIKEY;
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper bookmakerMapper = new ObjectMapper();
             BookMakersResponse bookmakerResponse = bookmakerMapper.readValue(responseBodyString, BookMakersResponse.class);
@@ -236,7 +238,7 @@ public class SportsData {
 
    private static void marketRequest(){
        try{
-           String url =BASEURL +  "/markets?" + APIHEADER;
+           String url =BASEURL +  "/markets?" + APIKEY ;
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper marketMapper = new ObjectMapper();
            MarketResponse marketResponse = marketMapper.readValue(responseBodyString, MarketResponse.class);
@@ -252,8 +254,8 @@ public class SportsData {
 
    private static void venueRequest(){
        try{
-           int country_id = Utils.country_id();
-           String url = BASEURL + "/venues?" + APIHEADER + "&country_id=" + country_id;
+           int country_id = Utils.getCountry_id();
+           String url = BASEURL + "/venues?"  + "&country_id=" + country_id;
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper venueMapper = new ObjectMapper();
            VenueResponse venueResponse = venueMapper.readValue(responseBodyString, VenueResponse.class);
@@ -271,8 +273,8 @@ public class SportsData {
 
    private static void refereeRequest(){
        try{
-           int country_id = Utils.country_id();
-           String url = BASEURL + "/referees?" + APIHEADER + "&country_id=" + country_id;
+           int country_id = Utils.getCountry_id();
+           String url = BASEURL + "/referees?"  + "&country_id=" + country_id;
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper refereeMapper = new ObjectMapper();
            RefereeResponse refereeResponse = refereeMapper.readValue(responseBodyString, RefereeResponse.class);
@@ -289,14 +291,16 @@ public class SportsData {
 
    private static void roundRequest(){
        try{
-           String url = BASEURL + "/rounds?" + APIHEADER + "&season_id=503";
+           int season_id = Utils.getSeason_id();
+           String url = BASEURL + "/rounds?"  + "&season_id=" + season_id+ "\"";
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper roundMapper = new ObjectMapper();
            RoundResponse roundResponse = roundMapper.readValue(responseBodyString, RoundResponse.class);
            for(int i = 0; i<roundResponse.getData().size();i++)
            {
-               System.out.println("First Name: " + roundResponse.getData().get(i).getName());
-               System.out.println("Last Name: " + roundResponse.getData().get(i).getIs_current());
+               System.out.println("Name: " + roundResponse.getData().get(i).getName());
+               System.out.println("Is current: " + roundResponse.getData().get(i).getIs_current());
+               System.out.println("League: " + roundResponse.getData().get(i).getLeague_name());
                System.out.println("\n");
            }
        }  catch (IOException e)  {
