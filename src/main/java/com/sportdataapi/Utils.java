@@ -2,9 +2,9 @@ package com.sportdataapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sportdataapi.Request.CountryResponse;
-import com.sportdataapi.Request.LeagueResponse;
-import com.sportdataapi.Request.SeasonResponse;
+import com.sportdataapi.sportdata.CountryResponse;
+import com.sportdataapi.sportdata.LeagueResponse;
+import com.sportdataapi.sportdata.SeasonResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -16,6 +16,7 @@ public class Utils {
     public static final String BASEURL = "https://app.sportdataapi.com/api/v1/soccer";
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final String APIKEY= "1f8177a0-ba72-11ec-b83e-09e34675ae35";
+
     public static String apiRequest(String url){
         final Request request = new Request.Builder()
                 .url(BASEURL + url)
@@ -51,9 +52,9 @@ public class Utils {
         }
         Scanner tc = new Scanner(System.in);
         System.out.println("To view the data specify the country you would like to see ");
-        String Name = tc.nextLine();
+        String name = tc.nextLine();
 
-        return id.get(Name);
+        return id.get(name);
     }
 
     static int getLeague_id() throws IOException{
@@ -100,6 +101,5 @@ public class Utils {
 
         return season_id.get(seasonName);
     }
-
 
 }

@@ -2,7 +2,7 @@ package com.sportdataapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sportdataapi.Request.*;
+import com.sportdataapi.sportdata.*;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -70,7 +70,7 @@ public class SportsData {
                 }
 
                 System.out.println("Would you like to check more data on the sports app?");
-                System.out.println("Enter 77 to end the program or any other integer continue");
+                System.out.println("Enter any integer to continue or 77 to end the program");
                 if(sc.nextInt() == 77){
                     stillRunning = false;
                 }
