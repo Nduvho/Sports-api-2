@@ -29,7 +29,6 @@ public class SportsData {
             try {
                 int data = dataOptions(sc);
                 if (data==1)  {
-                    System.out.println("League information");
                     leagueRequest();
                 }
                 else if(data==2) {
@@ -114,10 +113,10 @@ public class SportsData {
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper leagueMapper = new ObjectMapper();
             LeagueResponse leagueResponse = leagueMapper.readValue(responseBodyString, LeagueResponse.class);
+            System.out.println("*****list of leagues*****\n");
             for(int i = 0; i<leagueResponse.getData().size();i++)
             {
                 System.out.println("Name: " + leagueResponse.getData().get(i).getName());
-                System.out.println("Country id: " + leagueResponse.getData().get(i).getCountry_id());
                 System.out.println("\n");
             }
         }  catch (IOException e)  {
