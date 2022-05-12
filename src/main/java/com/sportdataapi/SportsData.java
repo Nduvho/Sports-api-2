@@ -151,6 +151,7 @@ public class SportsData {
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper teamMapper = new ObjectMapper();
             TeamsResponse teamResponse = teamMapper.readValue(responseBodyString, TeamsResponse.class);
+            System.out.println("*****list of Teams*****\n");
             for(int i = 0; i<teamResponse.getData().size();i++)
             {
                 System.out.println("Name: " + teamResponse.getData().get(i).getName());
@@ -169,6 +170,7 @@ public class SportsData {
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper seasonMapper = new ObjectMapper();
            SeasonResponse seasonResponse = seasonMapper.readValue(responseBodyString, SeasonResponse.class);
+           System.out.println("*****list of Seasons*****\n");
            for(int i = 0; i<seasonResponse.getData().size();i++)
            {
                System.out.println("Name: " + seasonResponse.getData().get(i).getName());
@@ -188,6 +190,7 @@ public class SportsData {
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper stageMapper = new ObjectMapper();
             StageResponse stageResponse = stageMapper.readValue(responseBodyString, StageResponse.class);
+            System.out.println("*****list of Stages*****\n");
             for(int i = 0; i<stageResponse.getData().size();i++)
             {
                 System.out.println("Name: " + stageResponse.getData().get(i).getName());
@@ -205,6 +208,7 @@ public class SportsData {
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper playerMapper = new ObjectMapper();
             PlayerResponse playerResponse = playerMapper.readValue(responseBodyString, PlayerResponse.class);
+            System.out.println("*****list of Players*****\n");
             for(int i = 0; i<playerResponse.getData().size();i++)
             {
                 System.out.println("First name: " + playerResponse.getData().get(i).getFirstname());
@@ -225,6 +229,7 @@ public class SportsData {
             String responseBodyString = Utils.apiRequest(url);
             ObjectMapper bookmakerMapper = new ObjectMapper();
             BookMakersResponse bookmakerResponse = bookmakerMapper.readValue(responseBodyString, BookMakersResponse.class);
+            System.out.println("*****list of Bookmakers*****\n");
             for(int i = 0; i<bookmakerResponse.getData().size();i++)
             {
                 System.out.println("Name: " + bookmakerResponse.getData().get(i).getName());
@@ -241,6 +246,7 @@ public class SportsData {
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper marketMapper = new ObjectMapper();
            MarketResponse marketResponse = marketMapper.readValue(responseBodyString, MarketResponse.class);
+           System.out.println("*****list of Markets*****\n");
            for(int i = 0; i<marketResponse.getData().size();i++)
            {
                System.out.println("Name: " + marketResponse.getData().get(i).getName());
@@ -258,6 +264,7 @@ public class SportsData {
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper venueMapper = new ObjectMapper();
            VenueResponse venueResponse = venueMapper.readValue(responseBodyString, VenueResponse.class);
+           System.out.println("*****list of Venues*****\n");
            for(int i = 0; i<venueResponse.getData().size();i++)
            {
                System.out.println("Name: " + venueResponse.getData().get(i).getName());
@@ -277,6 +284,7 @@ public class SportsData {
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper refereeMapper = new ObjectMapper();
            RefereeResponse refereeResponse = refereeMapper.readValue(responseBodyString, RefereeResponse.class);
+           System.out.println("*****list of Referees*****\n");
            for(int i = 0; i<refereeResponse.getData().size();i++)
            {
                System.out.println("First Name: " + refereeResponse.getData().get(i).getFirstname());
@@ -295,6 +303,7 @@ public class SportsData {
            String responseBodyString = Utils.apiRequest(url);
            ObjectMapper roundMapper = new ObjectMapper();
            RoundResponse roundResponse = roundMapper.readValue(responseBodyString, RoundResponse.class);
+           System.out.println("*****list of Rounds*****\n");
            for(int i = 0; i<roundResponse.getData().size();i++)
            {
                System.out.println("Name: " + roundResponse.getData().get(i).getName());
