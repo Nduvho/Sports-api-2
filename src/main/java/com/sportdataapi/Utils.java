@@ -53,7 +53,15 @@ public class Utils {
             e.printStackTrace();
         }
          if(id.get(Name) ==null) {
-             System.out.println("Invalid country,Please enter a valid country");
+             System.out.println("Invalid country,You have 1 chance remaining");
+             System.out.println("Please enter a valid country: ");
+             try {
+                 Name = tc.nextLine();
+                 country_id = id.get(Name);
+
+             } catch(NullPointerException e) {
+                 System.out.println("Invalid country again,Please view a list of valid countries on the menu");
+             }
          }
          else
              country_id = id.get(Name);
@@ -81,7 +89,15 @@ public class Utils {
         }
 
         if(league_id.get(leagueName) ==null) {
-            System.out.println("Invalid League,Please enter a valid League");
+            System.out.println("Invalid League,You have 1 chance remaining");
+            System.out.println("Please enter a valid League: ");
+            try {
+                leagueName = tc.nextLine();
+                league = league_id.get(leagueName);
+
+            } catch(NullPointerException e) {
+                System.out.println("Invalid league again,Please view a list of valid leagues on the menu");
+            }
         }
         else
             league = league_id.get(leagueName);
@@ -111,7 +127,15 @@ public class Utils {
         }
 
         if(season_id.get(seasonName) ==null) {
-            System.out.println("Invalid Season,Please enter a valid Season");
+            System.out.println("Invalid league,You have 1 chance remaining");
+            System.out.println("Please enter a valid league: ");
+            try {
+                seasonName = tc.nextLine();
+                season = season_id.get(seasonName);
+
+            } catch(NullPointerException e) {
+                System.out.println("Invalid league again,Please view a list of valid countries on the menu");
+            }
         }
         else
             season = season_id.get(seasonName);
