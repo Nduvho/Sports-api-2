@@ -127,14 +127,14 @@ public class Utils {
         }
 
         if(season_id.get(seasonName) ==null) {
-            System.out.println("Invalid league,You have 1 chance remaining");
-            System.out.println("Please enter a valid league: ");
+            System.out.println("Invalid season,You have 1 chance remaining");
+            System.out.println("Please enter a valid season: ");
             try {
                 seasonName = tc.nextLine();
                 season = season_id.get(seasonName);
 
             } catch(NullPointerException e) {
-                System.out.println("Invalid league again,Please view a list of valid countries on the menu");
+                System.out.println("Invalid season again,Please view a list of valid countries on the menu");
             }
         }
         else
